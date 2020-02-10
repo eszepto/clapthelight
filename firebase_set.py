@@ -27,6 +27,7 @@ if __name__ == "__main__":
         "databaseURL": "https://handclap-2100f.firebaseio.com",
         "storageBucket": "handclap-2100f.appspot.com"
     }
+
     mydb = firebase_handclap(config,"zunchero@gmail.com","123456")
-    mydb.update("light","light1",1)
+    mydb.update("light","LED1",0)
     print(mydb.getAll())
