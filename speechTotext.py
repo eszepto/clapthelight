@@ -26,36 +26,44 @@ mydb = firebase_handclap(config,"zunchero@gmail.com","123456")
 
 
 import speech_recognition as sr
-r = sr.Recognizer()
 
+r=sr.Recognizer()
+number=0
 print(sr.Microphone.list_microphone_names())
 mic = sr.Microphone()
 for i, mic_name in enumerate(sr.Microphone.list_microphone_names()):
     if("samson" in mic_name):
         mic = sr.Microphone(device_index=i)
-
-
-
-
+        number=i
+        print("samson")
+        break
+    
+flag = True
 with mic as source:
+    
+   
     while True:
-        r.adjust_for_ambient_noise(source)
+        r.energy_threshold = 2300
+        r.dynamic_energy_threshold = False
         print("SAY SOMETHING")
-        audio = r.listen(source)
-        print("end record")
 
         try:
-            speech = str(r.recognize_google(audio, language='th'))
+            audio = r.listen(source, timeout=1.5)
+            print("end record")
+            speech = str(r.recognize_google(audio, language="th"))
             print("TEXT :" + speech)
         except:
             continue
+        if (speech.lower() == "ok google") or speech.lower() == "hey google":
+            falg = True
+            continue
         
-        if  "เปิดไฟ" in speech:
-            mydb.update("light", "LED1", 1)
-            print("เปิดแล้วจ้า")
-        elif "ปิดไฟ" in speech:
-            mydb.update("light", "LED1", 0)
-            print("ปิดแล้วจ้า")
-        else:
-            pass;
-        continue
+        if flag == True:
+            if  "เปิดไฟ" in speech:
+                mydb.update("light", "LED1", 1)
+                print("เปิดแล้วจ้า")
+            elif "ปิดไฟ" in speech:
+                mydb.update("light", "LED1", 0)
+                print("ปิดแล้วจ้า")
+        
+        
