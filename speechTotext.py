@@ -1,3 +1,4 @@
+#! /usr/bin/python3
 class firebase_handclap(object):
     def __init__(self, config,email="zunchero@gmail.com", pwd="123456"):
         import pyrebase
@@ -37,11 +38,11 @@ for i, mic_name in enumerate(sr.Microphone.list_microphone_names()):
         number=i
         print("samson")
         break
-    
+
 flag = True
 with mic as source:
-    
-   
+
+
     while True:
         r.energy_threshold = 2300
         r.dynamic_energy_threshold = False
@@ -57,7 +58,7 @@ with mic as source:
         if (speech.lower() == "ok google") or speech.lower() == "hey google":
             falg = True
             continue
-        
+
         if flag == True:
             if  "เปิดไฟ" in speech:
                 mydb.update("light", "LED1", 1)
@@ -65,5 +66,4 @@ with mic as source:
             elif "ปิดไฟ" in speech:
                 mydb.update("light", "LED1", 0)
                 print("ปิดแล้วจ้า")
-        
-        
+
